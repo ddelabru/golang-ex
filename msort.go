@@ -70,10 +70,7 @@ func msort[T ordered](a []T) {
 
 func main() {
 	a := [...]int{8, 2, 3, 9, 1, 7, 4, 5, 0, 6}
-	for i := 0; i < len(a); i++ {
-		fmt.Printf("%d\n", a[i])
-	}
-	fmt.Printf("\n")
+	fmt.Println(a)
 	msort(a[0:])
 	fmt.Println(a)
 }
