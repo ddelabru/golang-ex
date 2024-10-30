@@ -15,12 +15,9 @@
    You should have received a copy of the GNU General Public License along with
    this program. If not, see <https://www.gnu.org/licenses/>. */
 
-package main
+package msort
 
-import (
-	"fmt"
-	"sync"
-)
+import "sync"
 
 type ordered interface {
 	~int | ~float32 | ~float64 | ~byte | ~rune | ~string
@@ -40,7 +37,7 @@ func merge[T ordered](left []T, right []T, combined []T) {
 	}
 }
 
-func msort[T ordered](a []T) {
+func Msort[T ordered](a []T) {
 	if len(a) < 2 {
 		return
 	}
@@ -55,22 +52,15 @@ func msort[T ordered](a []T) {
 	wg.Add(2)
 	go func() {
 		defer wg.Done()
-		msort(a[0:half])
+		Msort(a[0:half])
 	}()
 	go func() {
 		defer wg.Done()
-		msort(a[half:])
+		Msort(a[half:])
 	}()
 	wg.Wait()
 	var left, right = make([]T, half), make([]T, len(a)-half)
 	copy(left, a[0:half])
 	copy(right, a[half:])
 	merge(left, right, a)
-}
-
-func main() {
-	a := [...]int{8, 2, 3, 9, 1, 7, 4, 5, 0, 6}
-	fmt.Println(a)
-	msort(a[0:])
-	fmt.Println(a)
 }
